@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view locale="#{jezik.jezik}"/>
+    <h:head>
+        <title>#{prop['aerodromiInterval.naslov']}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet library="css" name="stylesheet.css"/>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBT8AIs_B7WUgSCHAyT_LVEZWvKdZaZaGg" type="text/javascript"></script>
+    </h:head>
+    <body>
+        <h3 align="center"> #{prop['aerodromiInterval.naslov']} </h3>
+        <br/>
+        <h:form>
+            <h:outputLabel value="#{prop['aerodromInterval.pocetakIntervala']}"/>
+            <h:inputText id="pocetakIntervala" value="#{aerodromiInterval.odVremena}"/>
+            <br/>
+            <h:outputLabel value="#{prop['aerodromInterval.krajIntervala']}"/>
+            <h:inputText id="krajIntervala" value="#{aerodromiInterval.doVremena}"/>
+            <br/>
+            <h:commandButton id="dohvatiLetove" value="#{prop['aerodromInterval.preuzmiLetove']}" action="#{aerodromiInterval.preuzmiLetoveUIntervalu}">
+                <f:ajax event="action" render="lstLetovi messages" execute="pocetakIntervala krajIntervala lstAerodrom"/>
+            </h:commandButton>
+            <h:commandButton id="akcija" value="#{prop['aerodromInterval.prikaziMapu']}">
+                <f:ajax event="click" render="mapa" execute="lstAerodrom"/>
+            </h:commandButton>
+            
+            <p:dataTable id="lstAerodrom" value="#{aerodromiInterval.aerodromi}" 
+                         selectionMode="single"
+                         selection="#{aerodromiInterval.odabraniAerodrom}"
+                         var="aerodrom" rows="7" 
+                         rowKey="#{aerodrom.icao}"
+                         paginator="true">
+                <f:facet name="header">
+                    #{prop['aerodromInterval.aerodromi']}
+                </f:facet>
+                <p:column headerText="#{prop['aerodromInterval.icao']}">
+                    <h:outputText value="#{aerodrom.icao}" />
+                </p:column>
+                <p:column headerText="#{prop['aerodromInterval.naziv']}">
+                    <h:outputText value="#{aerodrom.naziv}" />
+                </p:column>
+                <p:column headerText="#{prop['aerodromInterval.drzava']}">
+                    <h:outputText value="#{aerodrom.drzava}" />
+                </p:column>
+                <p:column headerText="#{prop['aerodromInterval.lat']}">
+                    <h:outputText value="#{aerodrom.lokacija.latitude}" />
+                </p:column>
+                <p:column headerText="#{prop['aerodromInterval.lon']}">
+                    <h:outputText value="#{aerodrom.lokacija.longitude}" />
+                </p:column>
+            </p:dataTable>
+            <br/>
+
+            <p:dataTable id="lstLetovi" value="#{aerodromiInterval.avioniLete}" 
+                         selectionMode="single"
+                         selection="#{aerodromiInterval.avionLeti}"
+                         var="avion" 
+                         rowKey="#{avion.icao24}">
+                <f:facet name="header">
+                    #{prop['aerodromInterval.letovi']}
+                </f:facet>
+
+                <p:column headerText="#{prop['aerodromInterval.polijetanje']}">
+                    <h:outputText value="#{aerodromiInterval.pretvoriDatum(avion.firstSeen)}" />
+                </p:column>
+                <p:column headerText="#{prop['aerodromInterval.slijetanje']}">
+                    <h:outputText value="#{aerodromiInterval.pretvoriDatum(avion.lastSeen)}" />
+                </p:column>
+                <p:column headerText="#{prop['aerodromInterval.aerodromSlijetanja']}">
+                    <h:outputText value="#{avion.estArrivalAirport}" />
+                </p:column>
+            </p:dataTable>
+            
+            <h:commandButton id="pregledLetovaAviona" value="#{prop['aerodromInterval.preuzmiLetoveAviona']}" action="#{aerodromiInterval.dohvatiPodatkeLetoviIzabranogAviona()}">
+                <f:ajax event="action" render="lstPregledLetova messages" execute="pocetakIntervala krajIntervala lstAerodrom lstLetovi"/>
+            </h:commandButton>
+
+            <p:dataTable id="lstPregledLetova" value="#{aerodromiInterval.listaLetovaOdabranogAviona}" 
+                         selectionMode="single"
+                         selection="#{aerodromiInterval.letOdabranogAviona}"
+                         var="avionLet" 
+                         rowKey="">
+                <f:facet name="header">
+                    #{prop['aerodromInterval.letoviOdabranogAviona']}
+                </f:facet>
+                <p:column headerText="#{prop['aerodromInterval.polijetanje']}">
+                    <h:outputText value="#{aerodromiInterval.pretvoriDatum(avionLet.firstSeen)}" />
+                </p:column>
+                <p:column headerText="#{prop['aerodromInterval.slijetanje']}">
+                    <h:outputText value="#{aerodromiInterval.pretvoriDatum(avionLet.lastSeen)}" />
+                </p:column>
+                <p:column headerText="#{prop['aerodromInterval.aerodromSlijetanja']}">
+                    <h:outputText value="#{avionLet.estArrivalAirport}" />
+                </p:column>
+            </p:dataTable>
+
+            <br/>
+            <p:messages id="messages" showDetail="true" closable="true">
+            </p:messages>
+            <p:gmap id="mapa" center="#{aerodromiInterval.odabraniAerodrom.lokacija.latitude}, #{aerodromiInterval.odabraniAerodrom.lokacija.longitude}" zoom="15" type="HYBRID" style="width:100%;height:400px"/>
+        </h:form>
+    </body>
+</html>

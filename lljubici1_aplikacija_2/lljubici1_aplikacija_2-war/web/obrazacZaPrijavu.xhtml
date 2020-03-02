@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:view locale="#{jezik.jezik}"/>
+    <h:head>
+        <title>#{prop['obrazacZaPrijavu.naslov']}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet library="css" name="stylesheet.css"/>
+    </h:head>
+    <body>
+        <h:form>
+            <h:selectOneRadio value="#{jezik.jezik}">
+                <f:selectItem itemValue="hr" itemLabel="#{prop['jezik.hr']}"/>
+                <f:selectItem itemValue="en" itemLabel="#{prop['jezik.en']}"/>
+                <f:selectItem itemValue="de" itemLabel="#{prop['jezik.de']}"/>
+            </h:selectOneRadio>
+            <h:commandButton class="button-left-margin" value="#{prop['gumbJezik']}"/>
+
+            <h3 align="center"> #{prop['obrazacZaPrijavu.naslov']} </h3>
+            <br/>
+            <h:outputLabel value="#{prop['obrazacZaPrijavu.korisnickoIme']}"/>
+            <h:inputText value="#{prijavaKorisnika.korisnickoIme}"/>
+            <br/>
+            <h:outputLabel value="#{prop['obrazacZaPrijavu.lozinka']}"/>
+            <h:inputSecret value="#{prijavaKorisnika.lozinka}"/>
+            <br/>
+            <h:commandButton action="#{prijavaKorisnika.provjeriPrijavu}" value="#{prop['obrazacZaPrijavu.prijava']}"/>
+            <div>#{prijavaKorisnika.poruka}</div>
+            <br/>
+
+            <h3 align="center"> #{prop['obrazacZaPrijavu.registracija']} </h3>
+            <br/>
+            <h:outputLabel value="#{prop['obrazacZaPrijavu.ime']}"/>
+            <h:inputText value="#{pravaRegistracija.ime}"/>
+            <br/>
+            <h:outputLabel value="#{prop['obrazacZaPrijavu.prezime']}"/>
+            <h:inputText value="#{pravaRegistracija.prezime}"/>
+            <br/>
+            <h:outputLabel value="#{prop['obrazacZaPrijavu.korisnickoIme']}"/>
+            <h:inputText value="#{pravaRegistracija.korisnickoIme}"/>
+            <br/>
+            <h:outputLabel value="#{prop['obrazacZaPrijavu.lozinka']}"/>
+            <h:inputSecret value="#{pravaRegistracija.lozinka}"/>
+            <br/>
+            <h:outputLabel value="#{prop['obrazacZaPrijavu.ponovljenaLozinka']}"/>
+            <h:inputSecret value="#{pravaRegistracija.ponovljenaLozinka}"/>
+            <br/>
+            <h:commandButton action="#{pravaRegistracija.registrirajKorisnika()}" value="#{prop['obrazacZaPrijavu.registrirajSe']}"/>
+            <div>#{pravaRegistracija.poruka}</div>
+        </h:form>
+    </body>
+</html>

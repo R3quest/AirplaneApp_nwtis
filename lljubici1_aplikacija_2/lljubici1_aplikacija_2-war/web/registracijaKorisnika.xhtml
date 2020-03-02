@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view locale="#{jezik.jezik}"/>
+    <h:head>
+        <title>#{prop['registracijaKorisnika.naslov']}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet library="css" name="stylesheet.css"/>
+    </h:head>
+    <body>
+        <h3 align="center"> #{prop['registracijaKorisnika.naslov']} </h3>
+        <br/>
+        <h:form>
+            <p:dataTable id="dtbKorisnici" value="#{azuriranjeKorisnika.korisnici}" 
+                         var="korisnik" rows="7" 
+                         paginator="true">
+                <p:column>
+                    <f:facet name="header"> #{prop['registracijaKorisnika.ime']} </f:facet>
+                        #{korisnik.ime}
+                </p:column>
+                <p:column>
+                    <f:facet name="header"> #{prop['registracijaKorisnika.prezime']} </f:facet>
+                        #{korisnik.prezime}
+                </p:column>
+                <p:column>
+                    <f:facet name="header"> #{prop['registracijaKorisnika.korisnickoIme']} </f:facet>
+                        #{korisnik.korisnickoIme}
+                </p:column>
+            </p:dataTable>
+            
+            <h3 align="center"> #{prop['registracijaKorisnika.azurirajKorisnika']} </h3>
+            <h:outputLabel value="#{prop['registracijaKorisnika.ime']}"/>
+            <h:inputText id="ime" value="#{azuriranjeKorisnika.ime}"/>
+            <br/>
+            <h:outputLabel value="#{prop['registracijaKorisnika.prezime']}"/>
+            <h:inputText id="prezime" value="#{azuriranjeKorisnika.prezime}"/>
+            <br/>
+            <h:outputLabel value="#{prop['registracijaKorisnika.korisnickoIme']}"/>
+            <h:inputText id="korisnickoIme" value="#{azuriranjeKorisnika.korisnickoIme}"/>
+            <br/>
+            <h:outputLabel value="#{prop['registracijaKorisnika.lozinka']}"/>
+            <h:inputSecret id="lozinka" value="#{azuriranjeKorisnika.lozinka}"/>
+            <br/>
+            
+            <p:commandButton id="azuriranje" value="#{prop['registracijaKorisnika.azuriraj']}" action="#{azuriranjeKorisnika.azuriraj}" update="messages dtbKorisnici"/>
+
+            <br/>
+            
+            <p:messages id="messages" showDetail="true" closable="true">
+            </p:messages>
+        </h:form>
+    </body>
+</html>

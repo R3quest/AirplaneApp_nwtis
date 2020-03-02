@@ -1,0 +1,75 @@
+*{
+    margin: 1px;
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+}
+
+select{
+    width: 400px;
+    background-color: #C0C0C0;
+}
+
+option{
+    border: solid 1px black;
+    margin: 0;
+}
+
+option:hover{
+    background-color: gray;
+}
+
+td{
+    text-align: center;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    border: 1px solid black;
+    border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: black;  
+    border-radius: 2px;
+}
+
+.float-right{
+    float: right;
+    display: inline;
+}
+
+.margin-right{
+    margin-right: 90px;
+}
+
+input[type=submit]{
+    width: 150px;
+    height: 30px;
+    background-color: #001f3f;
+    color: white;
+    border: none;
+}
+
+input[type=submit]:hover{
+    transform: scale(1.027);
+    transition: transform .017s;
+}
+
+input[type=checkbox]{
+    -ms-transform: scale(1.3); /* IE */
+    -moz-transform: scale(1.3); /* FF */
+    -webkit-transform: scale(1.3); /* Safari and Chrome */
+    -o-transform: scale(1.3); /* Opera */
+    transform: scale(1.3);
+    padding: 10px;
+    vertical-align: middle;
+}
+
+#avioni th {
+  color:black;
+  font-size: 14px;
+}
+

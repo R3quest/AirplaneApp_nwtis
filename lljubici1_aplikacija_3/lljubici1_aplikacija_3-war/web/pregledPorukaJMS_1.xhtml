@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Pregled i brisanje JMS poruka NWTiS_lljubici1_1</title>
+        <h:outputStylesheet library="css" name="stylesheet.css"/>
+    </h:head>
+    <h:body>
+        <h:form id="forma">
+            <h3 align="center"> Pregled i brisanje JMS poruka NWTiS_lljubici1_1 </h3>
+            <br/>
+            <h:commandButton id="brisanje" value="Obrisi poruku" action="#{jmsPoruke_1.obrisiPoruku}">
+                
+            </h:commandButton>
+            <br/>
+            <p:dataTable id="dtbJMS" value="#{jmsPoruke_1.listaPoruka}" 
+                         var="poruka" rows="7" 
+                         selectionMode="single"
+                         selection="#{jmsPoruke_1.odabranaPoruka}"
+                         paginator="true"
+                         rowKey="#{poruka.id}">
+                <p:column>
+                    <f:facet name="header"> Id </f:facet>
+                        #{poruka.id}
+                </p:column>
+                <p:column>
+                    <f:facet name="header"> Komanda </f:facet>
+                        #{poruka.komanda}
+                </p:column>
+                <p:column>
+                    <f:facet name="header"> Vrijeme </f:facet>
+                        #{poruka.vrijeme}
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>

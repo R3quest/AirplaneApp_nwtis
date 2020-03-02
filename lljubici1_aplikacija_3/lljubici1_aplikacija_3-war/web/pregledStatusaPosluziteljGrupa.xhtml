@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Status Poslužitelja | Grupe </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet library="css" name="stylesheet.css"/>
+    </h:head>
+    <body>
+        <h3 align="center"> Status Poslužitelja | Grupe </h3>
+        <h:form>
+            <div>Status poslužitelja: #{statusPosluziteljGrupa.statusPosluzitelja}</div>
+            <h:selectOneListbox id="lstKomanda" value="#{statusPosluziteljGrupa.komanda}" size="7">
+                <f:selectItems itemValue="#{komanda}" value="#{statusPosluziteljGrupa.listaKomandi}" var="komanda" itemLabel="#{komanda}"/>
+                <p:ajax event="change" update="@this"/>
+            </h:selectOneListbox>
+            <br/>
+            <h:commandButton value="Posalji komandu" action="#{statusPosluziteljGrupa.posaljiKomandu}"/>
+            <br/><br/>
+            <div>Status grupe: #{statusPosluziteljGrupa.statusGrupe}</div>
+            <h:selectOneListbox id="lstKomandaGrupa" value="#{statusPosluziteljGrupa.komandaGrupa}" size="6">
+                <f:selectItems itemValue="#{_komanda}" value="#{statusPosluziteljGrupa.listaKomandiGrupa}" var="_komanda" itemLabel="#{_komanda}"/>
+                <p:ajax event="change" update="@this"/>
+            </h:selectOneListbox>
+            <br/>
+            <h:commandButton value="Posalji komandu grupa" action="#{statusPosluziteljGrupa.posaljiKomanduGrupa}"/>
+        </h:form>
+    </body>
+
+</html>

@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Pregled dnevnika</title>
+        <h:outputStylesheet library="css" name="stylesheet.css"/>
+    </h:head>
+    <h:body>
+        <h:form id="forma">
+            <h3 align="center"> PREGLED DNEVNIKA </h3>
+            <br/>
+            <p:dataTable id="dtbDnevnici" value="#{pregledDnevnikaRada.listaDnevnika}" 
+                         var="dnevnik" rows="#{pregledDnevnikaRada.brojLinijaPoStranici}" 
+                         paginator="true">
+                <p:column headerText="IP adresa" filterBy="#{dnevnik.ipAdresa}">
+                        #{dnevnik.ipAdresa}
+                </p:column>
+                <p:column headerText="Korisnicko ime" filterBy="#{dnevnik.korisnickoIme}">
+                        #{dnevnik.korisnickoIme}
+                </p:column>
+                <p:column headerText="Vrsta zapisa" filterBy="#{dnevnik.vrstaZapisa}">
+                        #{dnevnik.vrstaZapisa}
+                </p:column>
+                <p:column headerText="Poruka" filterBy="#{dnevnik.poruka}">
+                        #{dnevnik.poruka}
+                </p:column>
+                <p:column headerText="Sadrzaj" filterBy="#{dnevnik.sadrzaj}">
+                        #{dnevnik.sadrzaj}
+                </p:column>
+                <p:column headerText="Vrijeme prijema" filterBy="#{dnevnik.vrijemePrijema}">
+                        #{dnevnik.vrijemePrijema}
+                </p:column>
+                <p:column headerText="Trajanje obrade" filterBy="#{dnevnik.trajanjeObrade}">
+                        #{dnevnik.trajanjeObrade}
+                </p:column>
+            </p:dataTable>
+            <h3 align="center"> AŽURIRANJE PODATAKA </h3>
+            
+        </h:form>
+    </h:body>
+</html>
+

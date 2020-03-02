@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view locale="#{jezik.jezik}"/>
+    <h:head>
+        <title>#{prop['aerodromiMeteo.naslov']}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet library="css" name="stylesheet.css"/>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBT8AIs_B7WUgSCHAyT_LVEZWvKdZaZaGg" type="text/javascript"></script>
+    </h:head>
+    <body>
+        <h3 align="center"> #{prop['aerodromiMeteo.naslov']} </h3>
+        <br/>
+        <h:form>
+            <h:outputLabel value="#{prop['aerodromiMeteo._icao']}"/>
+            <h:inputText id="zaDodat" value="#{aerodromiMeteo.icaoZaDodat}"/>
+            <h:commandButton id="dodajAerodrom" value="#{prop['aerodromiMeteo.dodajAerodromGrupi']}" action="#{aerodromiMeteo.dodajAerodrom}">
+                <f:ajax event="action" render="lstAerodrom messages" execute="zaDodat"/>
+            </h:commandButton>
+            <h:commandButton id="obrisiAerodrom" value="#{prop['aerodromiMeteo.obrisiAerodromIzGrupe']}" action="#{aerodromiMeteo.obrisiAerodrom}">
+                <f:ajax event="action" render="lstAerodrom messages" execute="lstAerodrom"/>
+            </h:commandButton>
+            <br/>
+
+            <p:dataTable id="lstAerodrom" value="#{aerodromiMeteo.aerodromi}" 
+                         selectionMode="single"
+                         selection="#{aerodromiMeteo.odabraniAerodrom}"
+                         var="aerodrom" rows="7" 
+                         rowKey="#{aerodrom.icao}"
+                         paginator="true">
+                    <f:facet name="header">
+                       #{prop['aerodromiMeteo.aerodromi']}
+                    </f:facet>
+                    <p:column headerText="#{prop['aerodromiMeteo.icao']}">
+                        <h:outputText value="#{aerodrom.icao}" />
+                    </p:column>
+                    <p:column headerText="#{prop['aerodromiMeteo.naziv']}">
+                        <h:outputText value="#{aerodrom.naziv}" />
+                    </p:column>
+                    <p:column headerText="#{prop['aerodromiMeteo.drzava']}">
+                        <h:outputText value="#{aerodrom.drzava}" />
+                    </p:column>
+                    <p:column headerText="#{prop['aerodromiMeteo.lat']}">
+                        <h:outputText value="#{aerodrom.lokacija.latitude}" />
+                    </p:column>
+                    <p:column headerText="#{prop['aerodromiMeteo.lon']}">
+                        <h:outputText value="#{aerodrom.lokacija.longitude}" />
+                    </p:column>
+            </p:dataTable>
+
+            <h:panelGrid columns="2">
+                <h:panelGroup>
+                    <h:outputLabel value="#{prop['aerodromiMeteo.temperatura']}"/>
+                    <h:outputText id="temp" value="#{aerodromiMeteo.meteoPodaci.temperatureValue} celsius"/>
+                    <br/>
+                    <h:outputLabel value="#{prop['aerodromiMeteo.tlak']}"/>
+                    <h:outputText id="pressure" value="#{aerodromiMeteo.meteoPodaci.pressureValue} hPa"/>
+                    <br/>
+                    <h:outputLabel value="#{prop['aerodromiMeteo.vlaga']}"/>
+                    <h:outputText id="humidity" value="#{aerodromiMeteo.meteoPodaci.humidityValue} %"/>
+                </h:panelGroup>
+            </h:panelGrid>
+            <h:commandButton id="preuzmiMeteo" value="#{prop['aerodromiMeteo.preuzmiMeteo']}" action="#{aerodromiMeteo.preuzmiMeteoPodatke}">
+                <f:ajax event="action" render="temp pressure humidity messages mapa" execute="lstAerodrom"/>
+            </h:commandButton>
+            <br/><br/>
+            <h:commandButton id="aktivirati" value="#{prop['aerodromiMeteo.aktiviraj']}" action="#{aerodromiMeteo.aktiviratiGrupu}">
+                <f:ajax event="action" render="messages"/>
+            </h:commandButton>
+            <h:commandButton id="blokirati" value="#{prop['aerodromiMeteo.blokiraj']}" action="#{aerodromiMeteo.blokiratiGrupu}">
+                <f:ajax event="action" render="messages"/>
+            </h:commandButton>
+            <h:commandButton id="stanje" value="#{prop['aerodromiMeteo.status']}" action="#{aerodromiMeteo.pregledStatusaGrupe}">
+                <f:ajax event="action" render="messages"/>
+            </h:commandButton>
+            <br/>
+            
+            <p:gmap id="mapa" center="#{aerodromiMeteo.odabraniAerodrom.lokacija.latitude}, #{aerodromiMeteo.odabraniAerodrom.lokacija.longitude}" zoom="15" type="HYBRID" style="width:100%;height:400px"/>
+            
+            <p:messages id="messages" showDetail="true" closable="true">
+            </p:messages>
+
+        </h:form>
+    </body>
+</html>
